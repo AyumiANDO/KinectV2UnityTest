@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using System; //DateTime使うので追加
+using System.IO; //ファイル入出力で追加
 using System.Collections;
 using System.Collections.Generic;
 using Kinect = Windows.Kinect;
+using Microsoft.Kinect;
 
 public class ColorBodySourceView : MonoBehaviour 
 {
@@ -12,6 +15,8 @@ public class ColorBodySourceView : MonoBehaviour
     private BodySourceManager _BodyManager;
 
     public Camera ConvertCamera; //変換用のカメラ
+    public String filename; //保存ファイル名
+    //public List<Skeleton3D> skeletonData;
 
     private Kinect.CoordinateMapper _CoordinateMapper; //座標変換用オブジェクト
 
@@ -19,7 +24,7 @@ public class ColorBodySourceView : MonoBehaviour
     private int _KinectWidth = 1920;
     private int _KinectHeight = 1080;
 
-    private Dictionary<Kinect.JointType, Kinect.JointType> _BoneMap = new Dictionary<Kinect.JointType, Kinect.JointType>()
+    private Dictionary<Kinect.JointType, Kinect.JointType>_BoneMap = new Dictionary<Kinect.JointType, Kinect.JointType>()
     {
         { Kinect.JointType.FootLeft, Kinect.JointType.AnkleLeft },
         { Kinect.JointType.AnkleLeft, Kinect.JointType.KneeLeft },
@@ -53,6 +58,7 @@ public class ColorBodySourceView : MonoBehaviour
     
     void Update () 
     {
+        //Debug.Log(Kinect.JointType.FootLeft);
         if (BodySourceManager == null)
         {
             return;
@@ -118,12 +124,25 @@ public class ColorBodySourceView : MonoBehaviour
         {
             _CoordinateMapper = _BodyManager.Sensor.CoordinateMapper;
         }
+        /*
+        //ボタンを押すとcsvファイルを保存
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //現在時刻を取得
+            DateTime dtNow = DateTime.Now;
+            //現在時刻をStringにする
+            filename = dtNow.ToString("0_yy-MMdd-HHmmss");
+            Debug.Log(filename + "を保存");
+            //csvSave(body.Joints[Kinect.JointType.HandLeft].Position.X,0,0);
+        }
+        */
     }
     
     private GameObject CreateBodyObject(ulong id)
     {
         GameObject body = new GameObject("Body:" + id);
         
+        //たぶんここで骨格の描いてる
         for (Kinect.JointType jt = Kinect.JointType.SpineBase; jt <= Kinect.JointType.ThumbRight; jt++)
         {
             GameObject jointObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -137,7 +156,7 @@ public class ColorBodySourceView : MonoBehaviour
             jointObj.name = jt.ToString();
             jointObj.transform.parent = body.transform;
         }
-        
+
         return body;
     }
     
@@ -167,6 +186,33 @@ public class ColorBodySourceView : MonoBehaviour
             {
                 lr.enabled = false;
             }
+        }
+        //チェック
+        Debug.Log(body.Joints[Kinect.JointType.HandLeft].Position.X);
+
+        //ボタンを押すとcsvファイルを保存
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //現在時刻を取得
+            DateTime dtNow = DateTime.Now;
+            //現在時刻をStringにする
+            filename = dtNow.ToString("0_yy-MMdd-HHmmss");
+            Debug.Log(filename + "を保存");
+            //csvSave(body.Joints[Kinect.JointType.HandLeft].Position.X, body.Joints[Kinect.JointType.HandLeft].Position.Y, body.Joints[Kinect.JointType.HandLeft].Position.Z);
+
+            StreamWriter sw;
+            FileInfo fi;
+            fi = new FileInfo(Application.dataPath + "/Csv/" + filename + ".csv");
+            sw = fi.AppendText();
+
+            //全ての骨格を保存
+            for (Kinect.JointType jt = Kinect.JointType.SpineBase; jt <= Kinect.JointType.ThumbRight; jt++)
+            {
+                sw.WriteLine(body.Joints[jt].Position.X +","+ body.Joints[jt].Position.Y + "," + body.Joints[jt].Position.Z);
+            }
+
+            sw.Flush();
+            sw.Close();
         }
     }
     
@@ -217,5 +263,23 @@ public class ColorBodySourceView : MonoBehaviour
         return new Vector3(joint.Position.X * 10,
                             joint.Position.Y * 10,
                             -1);
+    }
+
+    //ファイル出力
+    public void csvSave(double x, double y, double z)
+    {
+        StreamWriter sw;
+        FileInfo fi;
+        fi = new FileInfo(Application.dataPath + "/Csv/"+ filename+".csv");
+        sw = fi.AppendText();
+
+        //全ての骨格を保存
+        for (Kinect.JointType jt = Kinect.JointType.SpineBase; jt <= Kinect.JointType.ThumbRight; jt++)
+        {
+            sw.WriteLine(x + "," + y + "," + z);
+        }
+        sw.Flush();
+        sw.Close();
+
     }
 }

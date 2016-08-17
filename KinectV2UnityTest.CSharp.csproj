@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -84,22 +78,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\GreenScreen\Scripts\CoordinateMapperManager.cs" />
-    <Compile Include="Assets\GreenScreen\Scripts\CoordinateMapperView.cs" />
-    <Compile Include="Assets\KinectView\Scripts\BodySourceManager.cs" />
-    <Compile Include="Assets\KinectView\Scripts\BodySourceView.cs" />
-    <Compile Include="Assets\KinectView\Scripts\ColorBodySourceView.cs" />
-    <Compile Include="Assets\KinectView\Scripts\ColorSourceManager.cs" />
-    <Compile Include="Assets\KinectView\Scripts\ColorSourceView.cs" />
-    <Compile Include="Assets\KinectView\Scripts\DepthSourceManager.cs" />
-    <Compile Include="Assets\KinectView\Scripts\DepthSourceView.cs" />
-    <Compile Include="Assets\KinectView\Scripts\DisableOnStart.cs" />
-    <Compile Include="Assets\KinectView\Scripts\InfraredSourceManager.cs" />
-    <Compile Include="Assets\KinectView\Scripts\InfraredSourceView.cs" />
-    <Compile Include="Assets\KinectView\Scripts\MultiSourceManager.cs" />
+    <Compile Include="Assets\Scripts\BodySourceManager.cs" />
+    <Compile Include="Assets\Scripts\BodySourceView.cs" />
+    <Compile Include="Assets\Scripts\ColorBodySourceView.cs" />
+    <Compile Include="Assets\Scripts\ColorSourceManager.cs" />
+    <Compile Include="Assets\Scripts\ColorSourceView.cs" />
+    <Compile Include="Assets\Scripts\CoordinateMapperManager.cs" />
+    <Compile Include="Assets\Scripts\CoordinateMapperView.cs" />
+    <Compile Include="Assets\Scripts\DepthSourceManager.cs" />
+    <Compile Include="Assets\Scripts\DepthSourceView.cs" />
+    <Compile Include="Assets\Scripts\DisableOnStart.cs" />
+    <Compile Include="Assets\Scripts\InfraredSourceManager.cs" />
+    <Compile Include="Assets\Scripts\InfraredSourceView.cs" />
+    <Compile Include="Assets\Scripts\MultiSourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\GreenScreen\Materials\GreenScreenShader.shader" />
+    <None Include="Assets\Materials\GreenScreenShader.shader" />
     <None Include="Assets\Plugins\x86\NuiDatabase\Expression\NuiExpressionModelManifest.txt" />
     <None Include="Assets\Plugins\x86\NuiDatabase\HDFaceTracker\AAMModel\Map2D3D_F.txt" />
     <None Include="Assets\Plugins\x86\NuiDatabase\HDFaceTracker\AAMModel\Map2D3D_HLP.txt" />

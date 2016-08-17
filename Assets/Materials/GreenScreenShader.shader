@@ -46,7 +46,8 @@ float4 frag (ps_input i, in uint id : SV_InstanceID) : COLOR
 	int colorHeight = (int)(i.tex.y * (float)1080);
 	int colorIndex = (int)(colorWidth + colorHeight * (float)1920);
 	
-	o = float4(0, 1, 0, 1);
+	//ここを変えるとマテリアルの色が変わる
+	o = float4(1, 1, 0, 0.0f);
 	
 	if ((!isinf(depthCoordinates[colorIndex].x) && !isnan(depthCoordinates[colorIndex].x) && depthCoordinates[colorIndex].x != 0) || 
 		!isinf(depthCoordinates[colorIndex].y) && !isnan(depthCoordinates[colorIndex].y) && depthCoordinates[colorIndex].y != 0)
